@@ -25,6 +25,6 @@ jobs:
 
       - name: Run Symbols.py
         env:
-          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+          PAT_TOKEN: ${{ secrets.GITHUB_PAT }}
         run: |
           python Symbols.py  # Replace 'path/to/Symbols.py' with the actual path
