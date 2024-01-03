@@ -67,7 +67,7 @@ fetch_data()
 
 # GitHub credentials and repository information
 github_user = "nikunjbaheti"
-github_token = os.Getenv("GITHUB_PAT")
+github_token = os.environ.get("PAT_TOKEN")
 repo_name = "NSE-Insider-Trading"
 file_path = "Symbols.csv"
 
