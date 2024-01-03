@@ -2,6 +2,7 @@ import csv
 import datetime
 import requests
 import base64
+import os
 from io import StringIO
 
 def fetch_data():
