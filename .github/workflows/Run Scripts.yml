@@ -30,7 +30,10 @@ jobs:
           python Symbols.py  # Replace 'path/to/Symbols.py' with the actual path
 
       - name: Upload CSV file to GitHub
-        uses: actions/upload-artifact@v4
-        with:
-          name: Github_Actions_Testing
-          path: Symbols.csv  # Replace with the path to your Symbols.csv file
+        uses: LasyIsLazy/github-upload-action@v0.1.0
+          with:
+            access-token: ${{ secrets.PAT_TOKEN }}
+            file-path: 
+            owner: nikunjbaheti
+            repo: Github_Actions_Testing
+            remote-dir: Github_Actions_Testing
