@@ -38,5 +38,5 @@ jobs:
         uses: ad-m/github-push-action@v0.7.0
         with:
           branch: main  # Set the branch you want to push to
-          github_token: ${{ secrets.PAT_TOKEN }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
           force: true
