@@ -31,9 +31,9 @@ jobs:
 
       - name: Upload CSV file to GitHub
         uses: LasyIsLazy/github-upload-action@v0.1.0
-          with:
-            access-token: ${{ secrets.PAT_TOKEN }}
-            file-path: 
-            owner: nikunjbaheti
-            repo: Github_Actions_Testing
-            remote-dir: Github_Actions_Testing
+        with:
+          access-token: ${{ secrets.PAT_TOKEN }}
+          file-path: localPath
+          owner: nikunjbaheti
+          repo: Github_Actions_Testing
+          remote-dir: Github_Actions_Testing
