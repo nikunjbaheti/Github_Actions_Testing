@@ -30,7 +30,7 @@ jobs:
           python Symbols.py  # Replace 'path/to/Symbols.py' with the actual path
 
       - name: Upload CSV file to GitHub
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Github_Actions_Testing
           path: Symbols.csv  # Replace with the path to your Symbols.csv file
