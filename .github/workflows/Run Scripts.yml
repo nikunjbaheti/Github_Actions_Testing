@@ -30,10 +30,13 @@ jobs:
           python Symbols.py  # Replace 'path/to/Symbols.py' with the actual path
 
       - name: Upload CSV file to GitHub
-        uses: LasyIsLazy/github-upload-action@v0.1.0
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+      - name: Commit and push changes
+        uses: ad-m/github-push-action@v0.7.0
         with:
-          access-token: ${{ secrets.PAT_TOKEN }}
-          file-path: Symbols.csv  # Replace 'Symbols.csv' with the actual file path
-          owner: nikunjbaheti
-          repo: Github_Actions_Testing
-          remote-dir: Github_Actions_Testing
+          branch: main  # Set the branch you want to push to
+          github_token: ${{ secrets.PAT_TOKEN }}
+          force: true
