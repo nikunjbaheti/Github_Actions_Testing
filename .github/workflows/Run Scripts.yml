@@ -33,7 +33,7 @@ jobs:
         uses: LasyIsLazy/github-upload-action@v0.1.0
         with:
           access-token: ${{ secrets.PAT_TOKEN }}
-          file-path: localPath
+          file-path: Symbols.csv  # Replace 'Symbols.csv' with the actual file path
           owner: nikunjbaheti
           repo: Github_Actions_Testing
           remote-dir: Github_Actions_Testing
