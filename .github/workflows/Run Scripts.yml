@@ -1,7 +1,6 @@
 name: Run Python Scripts
 
 on:
-  push
   workflow_dispatch:  # Triggered manually
 
 jobs:
