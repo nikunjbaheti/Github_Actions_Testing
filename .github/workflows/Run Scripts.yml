@@ -30,13 +30,10 @@ jobs:
           python Symbols.py  # Replace 'path/to/Symbols.py' with the actual path
 
       - name: Upload CSV file to GitHub
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
-      - name: Commit and push changes
-        uses: ad-m/github-push-action@v0.7.0
+        uses: actions/upload-artifact@v2
         with:
-          branch: main  # Set the branch you want to push to
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-          force: true
+          name: symbols-csv
+          path: symbols.csv  # Update the path to the actual location of your symbols.csv file
+
+      - name: Display uploaded files
+        run: ls ${{ github.workspace }}symbols.csv  # Update the path accordingly
