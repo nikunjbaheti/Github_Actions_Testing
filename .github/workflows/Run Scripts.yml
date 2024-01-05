@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: symbols-csv
-          path: ./symbols.csv  # Update the path to the actual location of your symbols.csv file
+          path: ./Symbols.csv  # Update the path to the actual location of your symbols.csv file
 
       - name: Display uploaded files
-        run: ls ${{ github.workspace }}/symbols.csv  # Update the path accordingly
+        run: ls ${{ github.workspace }}/Symbols.csv  # Update the path accordingly
