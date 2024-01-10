@@ -1,58 +1,41 @@
-import openai
 import pandas as pd
-import requests
-import os
+from alpha_vantage.timeseries import TimeSeries
+import logging
 
-# Retrieve the OpenAI GPT-3 API key from environment variables
-openai.api_key = os.environ.get('OPENAI_API_KEY')
+# Set up logging
+logging.basicConfig(filename='ticker_search.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Function to fetch CSV file from the given URL
-def fetch_csv_data(url):
-    response = requests.get(url)
-    content = response.text
-    df = pd.read_csv(pd.io.common.StringIO(content))  # Updated import
-    return df
+# Replace 'YOUR_API_KEY' with your actual Alpha Vantage API key
+api_key = 'QI9PFYE7SQUB9X0Q'
 
-# Function to generate NSE Symbols or BSE Codes using GPT-3
-def generate_codes_with_gpt3(prompt):
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # Choose the appropriate model
-        messages=[{"role": "system", "content": "You are a helpful assistant."},
-                  {"role": "user", "content": prompt}],
-    )
-    generated_text = response['choices'][0]['message']['content'].strip()
-    return generated_text
+# Initialize the TimeSeries object with your API key
+ts = TimeSeries(key=api_key)
 
-# URL of the CSV file
-csv_url = "https://raw.githubusercontent.com/nikunjbaheti/MF_Holdings/main/modified_StkCode.csv"
+# Read the CSV file into a DataFrame
+csv_file_path = 'modified_StkCode.csv'  # Replace with the actual path to your CSV file
+df = pd.read_csv(csv_file_path)
 
-# Fetch CSV data
-df = fetch_csv_data(csv_url)
-
-# Create empty lists to store results
-fincodes = []
-company_names = []
-generated_codes = []
-
-# Iterate over rows and generate codes
-for index, row in df.iterrows():
-    name = row['Stock Name']
-    fincode = row['Stock Number']
-    prompt = f"Generate NSE Symbols or BSE Codes for {name} ({fincode}):"
+def get_ticker_by_company_name(company_name):
+    # Search for stock symbols by company name
+    search_results, _ = ts.search_symbol(keywords=company_name)
     
-    # Use GPT-3 to generate codes
-    generated_code = generate_codes_with_gpt3(prompt)
-    
-    # Append to lists
-    fincodes.append(fincode)
-    company_names.append(name)
-    generated_codes.append(generated_code)
+    # Extract the first result (you can modify this logic based on your requirements)
+    if search_results:
+        first_result = search_results[0]
+        return first_result['1. symbol']
+    else:
+        return None
 
-# Create a new DataFrame with the results
-result_df = pd.DataFrame({'FinCode': fincodes, 'Company Name': company_names, 'Generated Code': generated_codes})
+# Add a new column 'Ticker' to the DataFrame to store the tickers
+df['Ticker'] = df['Stock Name'].apply(get_ticker_by_company_name)
 
-# Save the DataFrame to a CSV file
-result_df.to_csv('generated_codes_output.csv', index=False)
+# Log the results
+logging.info('Ticker search results:')
+logging.info(df)
 
-# Print a message indicating success
-print("Generated codes saved to generated_codes_output.csv")
+# Store the DataFrame with added Ticker column in a CSV file
+output_csv_file = 'Tickers.csv'
+df.to_csv(output_csv_file, index=False)
+
+# Log the file path where the output data is stored
+logging.info(f'Ticker data stored in {output_csv_file}')
