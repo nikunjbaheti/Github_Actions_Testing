@@ -27,8 +27,9 @@ jobs:
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          python Symbols.py  # Replace 'path/to/Symbols.py' with the actual path
-
+          python MFCode.py
+          python StkCode.py
+          Python name-change.py
 
       - name: Commit CSV files
         run: |
