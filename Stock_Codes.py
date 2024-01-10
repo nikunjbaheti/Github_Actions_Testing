@@ -36,8 +36,8 @@ generated_codes = []
 
 # Iterate over rows and generate codes
 for index, row in df.iterrows():
-    name = row['Name']
-    fincode = row['FinCode']
+    name = row['Stock Name']
+    fincode = row['Stock Number']
     prompt = f"Generate NSE Symbols or BSE Codes for {name} ({fincode}):"
     
     # Use GPT-3 to generate codes
