@@ -16,14 +16,18 @@ csv_file_path = 'modified_StkCode.csv'  # Replace with the actual path to your C
 df = pd.read_csv(csv_file_path)
 
 def get_ticker_by_company_name(company_name):
-    # Search for stock symbols by company name
-    search_results, _ = ts.search_symbol(keywords=company_name)
-    
-    # Extract the first result (you can modify this logic based on your requirements)
-    if search_results:
-        first_result = search_results[0]
-        return first_result['1. symbol']
-    else:
+    try:
+        # Search for stock symbols by company name
+        search_results, _ = ts.get_symbol_search(keywords=company_name)
+        
+        # Extract the first result (you can modify this logic based on your requirements)
+        if search_results and 'bestMatches' in search_results:
+            first_result = search_results['bestMatches'][0]
+            return first_result.get('1. symbol', None)
+        else:
+            return None
+    except Exception as e:
+        logging.error(f"Error searching for ticker for {company_name}: {str(e)}")
         return None
 
 # Add a new column 'Ticker' to the DataFrame to store the tickers
