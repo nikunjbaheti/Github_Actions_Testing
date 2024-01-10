@@ -1,8 +1,16 @@
 import pandas as pd
+import requests
+from io import StringIO
 
-# Read the CSV file
-file_path = 'StkCode.csv'
-df = pd.read_csv(file_path, delimiter='\t')
+# URL of the CSV file
+csv_url = 'https://raw.githubusercontent.com/nikunjbaheti/MF_Holdings/main/StkCode.csv'
+
+# Fetch the CSV file from the URL
+response = requests.get(csv_url)
+csv_data = response.text
+
+# Read the CSV data using pandas
+df = pd.read_csv(StringIO(csv_data), delimiter='\t')
 
 # Function to replace "Ltd" and "Ltd." with "Limited" and convert to proper case
 def clean_and_proper_case(row):
