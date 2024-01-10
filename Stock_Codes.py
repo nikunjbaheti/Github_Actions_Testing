@@ -4,7 +4,7 @@ import requests
 import os
 
 # Retrieve the OpenAI GPT-3 API key from environment variables
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 # Function to fetch CSV file from the given URL
 def fetch_csv_data(url):
