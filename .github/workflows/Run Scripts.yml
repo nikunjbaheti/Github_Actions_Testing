@@ -27,9 +27,7 @@ jobs:
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          python MFCode.py
-          python StkCode.py
-          Python name-change.py
+          python name-change.py
 
       - name: Commit CSV files
         run: |
