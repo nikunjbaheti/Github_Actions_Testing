@@ -1,9 +1,10 @@
 import openai
 import pandas as pd
 import requests
+import os
 
-# Set your OpenAI GPT-3 API key
-openai.api_key = 'your-api-key'
+# Retrieve the OpenAI GPT-3 API key from environment variables
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 # Function to fetch CSV file from the given URL
 def fetch_csv_data(url):
