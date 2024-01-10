@@ -10,9 +10,9 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 def fetch_csv_data(url):
     response = requests.get(url)
     content = response.text
-    df = pd.read_csv(pd.compat.StringIO(content))
+    df = pd.read_csv(pd.io.common.StringIO(content))  # Updated import
     return df
-
+    
 # Function to generate NSE Symbols or BSE Codes using GPT-3
 def generate_codes_with_gpt3(prompt):
     response = openai.Completion.create(
