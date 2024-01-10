@@ -1,5 +1,5 @@
 import pandas as pd
-from alpha_vantage.timeseries import TimeSeries
+import requests
 import logging
 
 # Set up logging
@@ -8,21 +8,23 @@ logging.basicConfig(filename='ticker_search.log', level=logging.INFO, format='%(
 # Replace 'YOUR_API_KEY' with your actual Alpha Vantage API key
 api_key = 'QI9PFYE7SQUB9X0Q'
 
-# Initialize the TimeSeries object with your API key
-ts = TimeSeries(key=api_key)
+# Replace 'path/to/your/csvfile.csv' with the actual path to your CSV file
+csv_file_path = 'modified_StkCode.csv'
+output_csv_file = 'Tickers.csv'
 
 # Read the CSV file into a DataFrame
-csv_file_path = 'modified_StkCode.csv'  # Replace with the actual path to your CSV file
 df = pd.read_csv(csv_file_path)
 
 def get_ticker_by_company_name(company_name):
     try:
-        # Search for stock symbols by company name
-        search_results, _ = ts.get_symbol_search(keywords=company_name)
-        
+        # Replace 'demo' with your actual Alpha Vantage API key
+        api_url = f'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={company_name}&apikey={api_key}'
+        response = requests.get(api_url)
+        data = response.json()
+
         # Extract the first result (you can modify this logic based on your requirements)
-        if search_results and 'bestMatches' in search_results:
-            first_result = search_results['bestMatches'][0]
+        if 'bestMatches' in data:
+            first_result = data['bestMatches'][0]
             return first_result.get('1. symbol', None)
         else:
             return None
@@ -38,7 +40,6 @@ logging.info('Ticker search results:')
 logging.info(df)
 
 # Store the DataFrame with added Ticker column in a CSV file
-output_csv_file = 'Tickers.csv'
 df.to_csv(output_csv_file, index=False)
 
 # Log the file path where the output data is stored
