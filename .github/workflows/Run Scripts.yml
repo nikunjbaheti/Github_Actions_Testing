@@ -23,5 +23,16 @@ jobs:
 
     - name: Run Stock Codes script
       run: python Stock_Codes.py
-      env:
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    - name: Create or update CSV files
+      run: |
+          # Assuming CSV files are in the same directory
+          for file in *.csv; do
+            [ -e "$file" ] || continue
+            echo "Processing $file"
+            git config --global user.email "actions@github.com"
+            git config --global user.name "GitHub Actions"
+            git add "$file"
+            git commit -m "Automated commit - $file" || true
+          done
+          git push
