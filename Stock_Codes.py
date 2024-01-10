@@ -12,15 +12,15 @@ def fetch_csv_data(url):
     content = response.text
     df = pd.read_csv(pd.io.common.StringIO(content))  # Updated import
     return df
-    
+
 # Function to generate NSE Symbols or BSE Codes using GPT-3
 def generate_codes_with_gpt3(prompt):
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=150
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",  # Choose the appropriate model
+        messages=[{"role": "system", "content": "You are a helpful assistant."},
+                  {"role": "user", "content": prompt}],
     )
-    generated_text = response.choices[0].text.strip()
+    generated_text = response['choices'][0]['message']['content'].strip()
     return generated_text
 
 # URL of the CSV file
