@@ -1,9 +1,7 @@
 name: Run Stock Codes
 
 on:
-  push:
-    branches:
-      - main  # Change this to your default branch if needed
+  workflow_dispatch: 
 
 jobs:
   run_stock_codes:
