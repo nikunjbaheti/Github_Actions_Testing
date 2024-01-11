@@ -45,7 +45,7 @@ def extract_data(scheme_code, json_data):
 
 def main():
     # Read scheme codes from MFCodes.csv
-    with open('MFCodes.csv', 'r') as csvfile:
+    with open('MF_Codes.csv', 'r') as csvfile:
         reader = csv.DictReader(csvfile)
         scheme_codes = [row['schemecode'] for row in reader]
 
